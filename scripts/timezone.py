@@ -9,7 +9,7 @@ Requires Benno's pexif library: http://code.google.com/p/pexif/
 """
 
 import sys
-from pexif import JpegFile, EXIF_OFFSET
+from pexif import JpegFile
 from datetime import timedelta, datetime
 from optparse import OptionParser
 
@@ -37,7 +37,7 @@ def adjust_time(primary, delta):
     if primary.DateTime:
         primary.DateTime = adjust_tag(primary.DateTime, delta)
 
-    embedded = primary[EXIF_OFFSET]
+    embedded = primary.__getattr__("ExtendedEXIF")
     if embedded:
         for tag in DATETIME_EMBEDDED_TAGS:
             if embedded[tag]:
